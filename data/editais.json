@@ -4,26 +4,29 @@
         "disciplinas": {
             "Língua Portuguesa": {
                 "Interpretação de Texto": {
-                    "Coesão e Coerência": false,
-                    "Inferências": false,
-                    "Ideia Principal": false
+                    "Coesão e Coerência": true,
+                    "Inferências": true,
+                    "Ideia Principal": true
                 },
                 "Gramática": {
-                    "Concordância Verbal": false,
-                    "Concordância Nominal": false,
-                    "Regência": false
+                    "Concordância Verbal": true,
+                    "Concordância Nominal": true,
+                    "Regência": true
                 }
             },
             "Matemática": {
                 "Raciocínio Lógico": {
                     "Proposições": false,
-                    "Tabela Verdade": false
+                    "Tabela Verdade": true
                 },
                 "Porcentagem": {
-                    "Cálculo de Porcentagem": false,
-                    "Juros Simples": false
+                    "Cálculo de Porcentagem": true,
+                    "Juros Simples": true
                 }
             }
         }
+    },
+    "edital pf": {
+        "disciplinas": {}
     }
 }
