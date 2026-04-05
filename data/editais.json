@@ -1,0 +1,29 @@
+{
+    "PRF 2024": {
+        "nome": "Polícia Rodoviária Federal 2024",
+        "disciplinas": {
+            "Língua Portuguesa": {
+                "Interpretação de Texto": {
+                    "Coesão e Coerência": false,
+                    "Inferências": false,
+                    "Ideia Principal": false
+                },
+                "Gramática": {
+                    "Concordância Verbal": false,
+                    "Concordância Nominal": false,
+                    "Regência": false
+                }
+            },
+            "Matemática": {
+                "Raciocínio Lógico": {
+                    "Proposições": false,
+                    "Tabela Verdade": false
+                },
+                "Porcentagem": {
+                    "Cálculo de Porcentagem": false,
+                    "Juros Simples": false
+                }
+            }
+        }
+    }
+}
