@@ -1,4 +1,7 @@
 {
+    "edital pf": {
+        "disciplinas": {}
+    },
     "PRF 2024": {
         "nome": "Polícia Rodoviária Federal 2024",
         "disciplinas": {
@@ -10,8 +13,8 @@
                 },
                 "Gramática": {
                     "Concordância Verbal": true,
-                    "Concordância Nominal": true,
-                    "Regência": true
+                    "Concordância Nominal": false,
+                    "Regência": false
                 }
             },
             "Matemática": {
@@ -25,11 +28,5 @@
                 }
             }
         }
-    },
-    "edital pf": {
-        "disciplinas": {}
-    },
-    "edital": {
-        "disciplinas": {}
     }
 }

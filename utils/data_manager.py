@@ -7,6 +7,9 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 EDITAIS_FILE = os.path.join(DATA_DIR, "editais.json")
 GRADE_FILE = os.path.join(DATA_DIR, "grade.json")
 
+EDITAIS_PLATAFORMA_FILE = os.path.join(DATA_DIR, "editais_plataforma.json")
+EDITAIS_USUARIO_FILE = os.path.join(DATA_DIR, "editais_usuario.json")
+
 def garantir_pasta_data():
     """cria a pasta /data se ela ainda nao existir"""
     if not os.path.exists(DATA_DIR):
@@ -31,3 +34,30 @@ def carregar_editais():
 def salvar_editais(editais):
     """salva todos os editais"""
     salvar_json(EDITAIS_FILE, editais)
+
+def carregar_editais_plataforma():
+    """ Retorna os editais disponiveis"""
+    return carregar_json(EDITAIS_PLATAFORMA_FILE)
+
+def carregar_editais_usuario():
+    """Retorna os editais cadastrados pelo usuario"""
+    return carregar_json(EDITAIS_USUARIO_FILE)
+
+def salvar_editais_usuario(editais):
+    """Salvar os editais do usuario"""
+    salvar_json(EDITAIS_USUARIO_FILE, editais)
+
+def adicionar_edital_plataforma(nome_edital):
+    """
+    Copia um edital da plataforma para a lista do usuario.
+    Retorna True se adicionou, False se ja existia.
+    """
+    plataforma = carregar_editais_plataforma()
+    usuario = carregar_editais_usuario()
+
+    if nome_edital in usuario:
+        return False
+
+    usuario[nome_edital] = plataforma[nome_edital]
+    salvar_editais_usuario(usuario)
+    return True
