@@ -78,7 +78,23 @@ else:
         st.info("Este edital ainda não tem disciplinas cadastradas.")
     else:
         for nome_disc, topicos in disciplinas.items():
-            with st.expander(f" {nome_disc}"):
+            #calcular progresso
+            total = 0
+            estudados = 0
+
+            for subtopicos in topicos.values():
+                for feito in subtopicos.values():
+                    total += 1
+                    if feito:
+                        estudados += 1
+            #calcular porcentagem
+            if total > 0:
+                percentual = estudados / total
+            else:
+                percentual = 0
+            with st.expander(f"{nome_disc} - {estudados}/{total} concluídos"):
+                st.progress(percentual)
+
                 for nome_topico, subtopicos in topicos.items():
                     st.markdown(f"** {nome_topico}**")
                     for nome_sub in subtopicos:

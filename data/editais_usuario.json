@@ -13,13 +13,13 @@
                 },
                 "Gramática": {
                     "Concordância Verbal": true,
-                    "Concordância Nominal": false,
-                    "Regência": false
+                    "Concordância Nominal": true,
+                    "Regência": true
                 }
             },
             "Matemática": {
                 "Raciocínio Lógico": {
-                    "Proposições": false,
+                    "Proposições": true,
                     "Tabela Verdade": true
                 },
                 "Porcentagem": {
