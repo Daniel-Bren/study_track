@@ -7,7 +7,7 @@
         "disciplinas": {
             "Língua Portuguesa": {
                 "Interpretação de Texto": {
-                    "Coesão e Coerência": true,
+                    "Coesão e Coerência": false,
                     "Inferências": true,
                     "Ideia Principal": true
                 },
@@ -28,5 +28,8 @@
                 }
             }
         }
+    },
+    "PCECE": {
+        "disciplinas": {}
     }
 }
