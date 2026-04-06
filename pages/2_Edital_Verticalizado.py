@@ -10,11 +10,16 @@ from utils.data_manager import (
     salvar_editais_usuario,
     adicionar_edital_plataforma
 )
+from utils.navegacao import mostrar_navegacao
 
-st.set_page_config(page_title="Edital Verticalizado", page_icon="📋", layout="wide")
+st.set_page_config(
+    page_title="Edital Verticalizado",
+    page_icon="📋",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-st.title("Edital Verticalizado")
-st.markdown("---")
+mostrar_navegacao()
 
 # Carrega os dois tipos de edital
 plataforma = carregar_editais_plataforma()

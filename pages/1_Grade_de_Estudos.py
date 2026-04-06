@@ -10,8 +10,16 @@ from utils.data_manager import (
     salvar_json,
     GRADE_FILE
 )
+from utils.navegacao import mostrar_navegacao
 
-st.set_page_config(page_title="Grade de Estudos", page_icon="📅", layout="wide")
+st.set_page_config(
+    page_title="Grade de Estudos",
+    page_icon="📅",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+mostrar_navegacao()
 
 # Configuracao de sessao
 if "alterou_grade" not in st.session_state:
@@ -31,7 +39,7 @@ if len(usuario) == 0:
     st.stop()
 
 # Cabecalho
-st.title("📅 Grade de Estudos")
+st.title("Grade de Estudos")
 st.markdown("---")
 
 # Seletor edital
