@@ -26,7 +26,7 @@ plataforma = carregar_editais_plataforma()
 usuario    = carregar_editais_usuario()
 
 # ---- SEÇÃO 1: Editais da plataforma ----
-st.subheader("Editais disponíveis na plataforma")
+st.subheader("Editais Prontos")
 
 if len(plataforma) == 0:
     st.info("Nenhum edital disponível na plataforma ainda.")
@@ -46,6 +46,8 @@ else:
 
 st.markdown("---")
 
+st.subheader("Criar edital")
+
 # ---- SEÇÃO 2: Adicionar edital manualmente ----
 with st.expander("Não encontrou seu edital? Adicione manualmente"):
     with st.form("form_edital_manual"):
@@ -62,6 +64,112 @@ with st.expander("Não encontrou seu edital? Adicione manualmente"):
                 salvar_editais_usuario(usuario)
                 st.success(f"Edital '{nome_edital}' adicionado com sucesso!")
                 st.rerun()
+
+# ---- SEÇÃO 2.5: Gerenciar disciplinas, tópicos e subtópicos ----
+if len(usuario) > 0:
+    with st.expander(" Gerenciar conteúdo do edital"):
+
+        # Filtra apenas editais criados manualmente pelo usuario
+        editais_editaveis = [
+            nome for nome, dados in usuario.items()
+            if dados.get("origem") != "plataforma"
+        ]
+
+        if len(editais_editaveis) == 0:
+            st.info("Você não possui editais próprios para gerenciar. Adicione um manualmente!")
+            st.stop()
+        else:
+            edital_gerenciar = st.selectbox(
+                label="Selecione o edital para gerenciar:",
+                options=editais_editaveis,
+                key="selectbox_gerenciar_editavel"
+            )
+        st.markdown("---")
+
+        # ---- Adicionar disciplina ----
+        st.markdown("Adicionar disciplina")
+        with st.form("form_disciplina"):
+            nome_disc_novo = st.text_input("Nome da disciplina (ex: Língua Portuguesa)")
+            botao_disc = st.form_submit_button("Adicionar disciplina")
+
+            if botao_disc:
+                if nome_disc_novo == "":
+                    st.error("Digite o nome da disciplina!")
+                elif nome_disc_novo in usuario[edital_gerenciar]["disciplinas"]:
+                    st.warning("Essa disciplina já existe!")
+                else:
+                    usuario[edital_gerenciar]["disciplinas"][nome_disc_novo] = {}
+                    salvar_editais_usuario(usuario)
+                    st.success(f"Disciplina '{nome_disc_novo}' adicionada!")
+                    st.rerun()
+
+        st.markdown("---")
+
+        # ---- Adicionar tópico ----
+        st.markdown("Adicionar tópico")
+
+        disciplinas_existentes = list(usuario[edital_gerenciar]["disciplinas"].keys())
+
+        if len(disciplinas_existentes) == 0:
+            st.info("Adicione uma disciplina primeiro!")
+        else:
+            with st.form("form_topico"):
+                disc_escolhida = st.selectbox(
+                    label="Disciplina:",
+                    options=disciplinas_existentes
+                )
+                nome_topico_novo = st.text_input("Nome do tópico (ex: Interpretação de Texto)")
+                botao_topico = st.form_submit_button("Adicionar tópico")
+
+                if botao_topico:
+                    if nome_topico_novo == "":
+                        st.error("Digite o nome do tópico!")
+                    elif nome_topico_novo in usuario[edital_gerenciar]["disciplinas"][disc_escolhida]:
+                        st.warning("Esse tópico já existe!")
+                    else:
+                        usuario[edital_gerenciar]["disciplinas"][disc_escolhida][nome_topico_novo] = {}
+                        salvar_editais_usuario(usuario)
+                        st.success(f"Tópico '{nome_topico_novo}' adicionado!")
+                        st.rerun()
+
+        st.markdown("---")
+
+        # ---- Adicionar subtópico ----
+        st.markdown("Adicionar subtópico")
+
+        if len(disciplinas_existentes) == 0:
+            st.info("Adicione uma disciplina primeiro!")
+        else:
+            with st.form("form_subtopico"):
+                disc_sub = st.selectbox(
+                    label="Disciplina:",
+                    options=disciplinas_existentes,
+                    key="disc_sub"
+                )
+
+                topicos_existentes = list(usuario[edital_gerenciar]["disciplinas"][disc_sub].keys())
+
+                if len(topicos_existentes) == 0:
+                    st.warning("Essa disciplina não tem tópicos ainda!")
+                    st.form_submit_button("Adicionar subtópico", disabled=True)
+                else:
+                    topico_sub = st.selectbox(
+                        label="Tópico:",
+                        options=topicos_existentes
+                    )
+                    nome_sub_novo = st.text_input("Nome do subtópico (ex: Coesão e Coerência)")
+                    botao_sub = st.form_submit_button("Adicionar subtópico")
+
+                    if botao_sub:
+                        if nome_sub_novo == "":
+                            st.error("Digite o nome do subtópico!")
+                        elif nome_sub_novo in usuario[edital_gerenciar]["disciplinas"][disc_sub][topico_sub]:
+                            st.warning("Esse subtópico já existe!")
+                        else:
+                            usuario[edital_gerenciar]["disciplinas"][disc_sub][topico_sub][nome_sub_novo] = False
+                            salvar_editais_usuario(usuario)
+                            st.success(f"Subtópico '{nome_sub_novo}' adicionado!")
+                            st.rerun()
 
 st.markdown("---")
 

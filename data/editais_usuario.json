@@ -1,6 +1,12 @@
 {
     "edital pf": {
-        "disciplinas": {}
+        "disciplinas": {
+            "Port": {
+                "Coesao textual": {
+                    "leitura de textos": true
+                }
+            }
+        }
     },
     "PRF 2024": {
         "nome": "Polícia Rodoviária Federal 2024",
@@ -30,6 +36,9 @@
         }
     },
     "PCECE": {
+        "disciplinas": {}
+    },
+    "Edital Teste": {
         "disciplinas": {}
     }
 }

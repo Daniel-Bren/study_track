@@ -50,14 +50,16 @@ def salvar_editais_usuario(editais):
 def adicionar_edital_plataforma(nome_edital):
     """
     Copia um edital da plataforma para a lista do usuario.
+    Marca a origem como 'plataforma' para bloquear edicao.
     Retorna True se adicionou, False se ja existia.
     """
     plataforma = carregar_editais_plataforma()
-    usuario = carregar_editais_usuario()
+    usuario    = carregar_editais_usuario()
 
     if nome_edital in usuario:
         return False
 
     usuario[nome_edital] = plataforma[nome_edital]
+    usuario[nome_edital]["origem"] = "plataforma"
     salvar_editais_usuario(usuario)
     return True
