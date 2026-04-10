@@ -12,12 +12,12 @@ mostrar_navegacao()
 
 st.title("📚 StudyTrack")
 st.subheader("Organize. Faça. Conquiste.")
-st.markdown("---")
+
 
 st.markdown("""
 ### Bem vindo!
 
 - 📅 **Grade de Estudos** — monte seu cronograma semanal
 - 📋 **Edital Verticalizado** — acompanhe seus tópicos
-- 📊 **Progresso** — veja sua evolução
+- 📚 **Sessão** — Comece a sua sessão diária de estudos
 """)
