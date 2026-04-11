@@ -105,17 +105,17 @@ with col_dir:
             <button onclick="iniciar()" style="padding:12px 28px; font-size:16px;
                 background:#1f77b4; color:white; border:none;
                 border-radius:8px; cursor:pointer;">
-                ▶ Iniciar
+                ▶ 
             </button>
             <button onclick="pausar()" style="padding:12px 28px; font-size:16px;
                 background:#ff7f0e; color:white; border:none;
                 border-radius:8px; cursor:pointer;">
-                ⏸ Pausar
+                ⏸ 
             </button>
             <button onclick="resetar()" style="padding:12px 28px; font-size:16px;
                 background:#d62728; color:white; border:none;
                 border-radius:8px; cursor:pointer;">
-                ↺ Resetar
+                ↺ 
             </button>
         </div>
     </div>
