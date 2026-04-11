@@ -20,6 +20,14 @@ st.set_page_config(
 )
 
 mostrar_navegacao()
+from utils.auth import carregar_sessao
+# Restaura sessao do cookie se necessario
+if "usuario" not in st.session_state or st.session_state["usuario"] is None:
+    usuario = carregar_sessao()
+    if usuario:
+        st.session_state["usuario"] = usuario
+    else:
+        st.switch_page("pages/0_Login.py")
 
 # Configuracao de sessao
 if "alterou_grade" not in st.session_state:
