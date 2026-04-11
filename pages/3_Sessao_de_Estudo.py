@@ -115,11 +115,6 @@ with col_dir:
             <button onclick="resetar()" style="padding:12px 28px; font-size:16px;
                 background:#d62728; color:white; border:none;
                 border-radius:8px; cursor:pointer;">
-                ↺ 
-            </button>
-        </div>
-    </div>
-
     <script>
         var modoAtual = "Cronometro";
         var totalSegundos = 0;
