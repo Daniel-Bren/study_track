@@ -5,12 +5,12 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from utils.data_manager import (
-    carregar_editais_usuario,
-    carregar_json,
-    salvar_json,
-    GRADE_FILE
+    carregar_editais_usuario_db,
+    carregar_grade_db,
+    salvar_grade_db
 )
 from utils.navegacao import mostrar_navegacao
+from utils.auth import verificar_sessao
 
 st.set_page_config(
     page_title="Grade de Estudos",
@@ -20,14 +20,7 @@ st.set_page_config(
 )
 
 mostrar_navegacao()
-from utils.auth import carregar_sessao
-# Restaura sessao do cookie se necessario
-if "usuario" not in st.session_state or st.session_state["usuario"] is None:
-    usuario = carregar_sessao()
-    if usuario:
-        st.session_state["usuario"] = usuario
-    else:
-        st.switch_page("pages/0_Login.py")
+verificar_sessao()
 
 # Configuracao de sessao
 if "alterou_grade" not in st.session_state:
@@ -36,10 +29,10 @@ if "alterou_grade" not in st.session_state:
 if "edital_grade" not in st.session_state:
     st.session_state["edital_grade"] = None
 
-# Carrega dados do usuario
-usuario = carregar_editais_usuario()
+# Carrega editais do usuario no Supabase
+usuario = carregar_editais_usuario_db()
 
-# Redirecionamento
+# Redirecionamento se nao tiver editais
 if len(usuario) == 0:
     st.title("Grade de Estudos")
     st.warning("Você ainda não adicionou nenhum edital!")
@@ -47,7 +40,7 @@ if len(usuario) == 0:
     st.stop()
 
 # Cabecalho
-st.title("Grade de Estudos")
+st.title("📅 Grade de Estudos")
 st.markdown("---")
 
 # Seletor edital
@@ -68,26 +61,24 @@ if st.session_state["edital_grade"] != edital_escolhido:
 
 st.markdown("---")
 
-# Carrega grades salvas
-todas_grades = carregar_json(GRADE_FILE)
-
-# Dias da semana — definido antes de tudo que usa essa variavel
+# Dias da semana
 dias = ["Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado", "Domingo"]
 
-# Se nao existir grade pra esse edital, cria uma vazia
-if edital_escolhido not in todas_grades:
-    todas_grades[edital_escolhido] = {
+# Carrega grade do Supabase
+grade_atual = carregar_grade_db(edital_escolhido)
+
+# Se nao existir grade, cria uma vazia
+if len(grade_atual) == 0:
+    grade_atual = {
         dia: ["-", "-", "-", "-", "-", "-"]
         for dia in dias
     }
-
-grade_atual = todas_grades[edital_escolhido]
 
 # Disciplinas disponiveis
 disciplinas = list(usuario[edital_escolhido].get("disciplinas", {}).keys())
 opcoes = ["-"] + disciplinas
 
-# Pre-popula session_state com valores salvos no JSON
+# Pre-popula session_state com valores salvos
 for dia in dias:
     for bloco in range(6):
         chave = f"grade_{edital_escolhido}_{dia}_{bloco}"
@@ -114,7 +105,6 @@ for i, dia in enumerate(dias):
                 label_visibility="collapsed"
             )
 
-            # Detecta alteracao
             if escolha != valor_atual:
                 st.session_state["alterou_grade"] = True
 
@@ -126,9 +116,8 @@ for i, dia in enumerate(dias):
 st.markdown("---")
 
 if st.session_state["alterou_grade"]:
-    if st.button("Salvar"):
-        todas_grades[edital_escolhido] = nova_grade
-        salvar_json(GRADE_FILE, todas_grades)
+    if st.button("💾 Salvar Grade"):
+        salvar_grade_db(edital_escolhido, nova_grade)
         st.session_state["alterou_grade"] = False
         st.success("Grade salva com sucesso!")
         st.rerun()

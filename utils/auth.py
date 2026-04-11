@@ -51,3 +51,28 @@ def apagar_sessao():
     cookie_manager = get_cookie_manager()
     cookie_manager.delete("study_track_token")
     st.session_state["usuario"] = None
+
+def verificar_sessao():
+    """
+    Verifica se o usuario esta logado.
+    Se nao estiver, redireciona pro login.
+    """
+    if "usuario" not in st.session_state:
+        st.session_state["usuario"] = None
+
+    if st.session_state["usuario"] is None:
+        usuario = carregar_sessao()
+        if usuario:
+            st.session_state["usuario"] = usuario
+        else:
+            st.switch_page("pages/0_Login.py")
+
+def fazer_logout():
+    """Remove a sessao do usuario"""
+    try:
+        supabase = get_supabase()
+        supabase.auth.sign_out()
+    except:
+        pass
+    apagar_sessao()
+    st.switch_page("pages/0_Login.py")
