@@ -72,15 +72,19 @@ with col_dir:
     <div style="text-align:center; padding: 20px;">
 
         <div style="display:flex; justify-content:center; gap:24px; margin-bottom:20px;">
-            <label style="color:white; font-size:16px; cursor:pointer;">
-                <input type="radio" name="modo" value="Cronometro" checked
-                       onchange="trocarModo(this.value)">
-                 Cronômetro
+            <label style="color:var(--text-color,#333); font-size:16px; 
+              cursor:pointer; display:flex; align-items:center; gap:6px;">
+    <input type="radio" name="modo" value="Cronometro" checked
+           onchange="trocarModo(this.value)"
+           style="width:18px; height:18px; cursor:pointer;">
+    <span>⏱ Cronômetro</span>
             </label>
-            <label style="color:white; font-size:16px; cursor:pointer;">
+            <label style="color:var(--text-color,#333); font-size:16px; 
+                          cursor:pointer; display:flex; align-items:center; gap:6px;">
                 <input type="radio" name="modo" value="Temporizador"
-                       onchange="trocarModo(this.value)">
-                 Temporizador
+                       onchange="trocarModo(this.value)"
+                       style="width:18px; height:18px; cursor:pointer;">
+                <span>⏳ Temporizador</span>
             </label>
         </div>
 

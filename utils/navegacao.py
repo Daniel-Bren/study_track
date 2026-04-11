@@ -1,15 +1,24 @@
 import streamlit as st
 
 def mostrar_navegacao():
+
     st.markdown("""
         <style>
             [data-testid="stSidebarNav"] {display: none;}
             .block-container {padding-top: 3.5rem !important;}
             [data-testid="stPageLink"] {padding: 0px !important;}
             hr {margin-top: 0.3rem !important; margin-bottom: 0.3rem !important;}
-            div[data-testid="stRadio"] {
-                display: flex;
-                justify-content: center;
+
+            /* Mobile — navegacao em linha */
+            @media (max-width: 768px) {
+                [data-testid="stHorizontalBlock"] {
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                }
+                [data-testid="stPageLink"] p {
+                    font-size: 13px !important;
+                    white-space: nowrap !important;
+                }
             }
         </style>
     """, unsafe_allow_html=True)
@@ -21,7 +30,7 @@ def mostrar_navegacao():
         "Sessão": "pages/3_Sessao_de_Estudo.py"
     }
 
-    cols = st.columns([1, 1, 1, 1, 6])
+    cols = st.columns(len(paginas))
     for i, (nome, caminho) in enumerate(paginas.items()):
         with cols[i]:
             st.page_link(caminho, label=nome)
