@@ -8,21 +8,17 @@ def mostrar_navegacao():
             .block-container {padding-top: 3.5rem !important;}
             hr {margin-top: 0.3rem !important; margin-bottom: 0.3rem !important;}
 
-            /* Força navegacao horizontal no mobile */
-            [data-testid="stHorizontalBlock"] {
+            /* Força colunas em linha horizontal sempre */
+            div[class*="stColumns"] {
                 display: flex !important;
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
                 overflow-x: auto !important;
-                gap: 4px !important;
             }
-            [data-testid="stHorizontalBlock"] > div {
+            div[class*="stColumns"] > div[class*="stColumn"] {
                 min-width: fit-content !important;
                 flex: none !important;
-            }
-            [data-testid="stPageLink"] {
-                padding: 0px !important;
-                white-space: nowrap !important;
+                width: auto !important;
             }
             [data-testid="stPageLink"] p {
                 font-size: 13px !important;
