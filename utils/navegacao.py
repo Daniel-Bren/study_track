@@ -1,14 +1,13 @@
 import streamlit as st
-
+from utils.auth import is_admin
 
 def mostrar_navegacao():
+
     st.markdown("""
         <style>
             [data-testid="stSidebarNav"] {display: none;}
             .block-container {padding-top: 3.5rem !important;}
             hr {margin-top: 0.3rem !important; margin-bottom: 0.3rem !important;}
-
-            /* Força colunas em linha horizontal sempre */
             div[class*="stColumns"] {
                 display: flex !important;
                 flex-direction: row !important;
@@ -33,6 +32,10 @@ def mostrar_navegacao():
         "Edital": "pages/2_Edital_Verticalizado.py",
         "Sessão": "pages/3_Sessao_de_Estudo.py"
     }
+
+    # Adiciona Admin se for administrador
+    if is_admin():
+        paginas["Admin"] = "pages/4_Admin.py"
 
     cols = st.columns(len(paginas))
     for i, (nome, caminho) in enumerate(paginas.items()):

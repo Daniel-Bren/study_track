@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from utils.data_manager import (
-    carregar_editais_plataforma,
+    carregar_editais_plataforma_db,
     carregar_editais_usuario_db,
     salvar_edital_usuario_db,
 )
@@ -23,7 +23,7 @@ mostrar_navegacao()
 verificar_sessao()
 
 # Carrega os dois tipos de edital
-plataforma = carregar_editais_plataforma()
+plataforma = carregar_editais_plataforma_db()
 usuario    = carregar_editais_usuario_db()
 
 # ---- SEÇÃO 1: Editais da plataforma ----

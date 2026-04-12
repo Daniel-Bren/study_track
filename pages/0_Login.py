@@ -38,6 +38,7 @@ aba = st.radio(
     options=["🔑 Entrar", "📝 Cadastrar"],
     horizontal=True
 )
+
 supabase = get_supabase()
 
 # ---- LOGIN ----
@@ -57,11 +58,6 @@ if aba == "🔑 Entrar":
                         "password": senha
                     })
                     st.session_state["usuario"] = resposta.user
-                    # Salva o token no cookie
-                    from utils.auth import salvar_sessao
-
-                    salvar_sessao(resposta.session.access_token)
-                    st.success("Login realizado com sucesso!")
                     st.switch_page("Home.py")
                 except Exception as e:
                     st.error("Email ou senha incorretos!")
