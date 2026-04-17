@@ -29,7 +29,7 @@ if not is_admin():
     st.error("Acesso negado!")
     st.stop()
 
-st.title("⚙️ Painel de Administração")
+st.title("Painel de Administração")
 st.markdown("---")
 
 editais_plataforma = carregar_editais_plataforma_db()

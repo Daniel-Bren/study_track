@@ -42,7 +42,7 @@ if len(usuario) == 0:
     st.stop()
 
 # Cabecalho
-st.title("📅 Grade de Estudos")
+st.title("Grade de Estudos")
 st.markdown("---")
 
 # Seletor edital
