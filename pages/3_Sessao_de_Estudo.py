@@ -5,7 +5,7 @@ from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from utils.data_manager import carregar_editais_usuario_db, carregar_grade_db
+from utils.data_manager import carregar_editais_usuario_db, carregar_grade_db, get_edital_ativo
 from utils.navegacao import mostrar_navegacao
 from utils.auth import verificar_sessao
 
@@ -19,7 +19,7 @@ st.set_page_config(
 mostrar_navegacao()
 verificar_sessao()
 
-st.title("⏱️ Sessão de Estudo")
+st.title("Sessão de Estudo")
 st.markdown("---")
 
 # Carrega editais do usuario
@@ -45,9 +45,18 @@ with col_esq:
     if len(usuario) == 0:
         st.info("Nenhum edital adicionado ainda.")
     else:
+        edital_ativo = get_edital_ativo()
+        opcoes_editais = list(usuario.keys())
+
+        if edital_ativo in opcoes_editais:
+            idx_ativo = opcoes_editais.index(edital_ativo)
+        else:
+            idx_ativo = 0
+
         edital_sessao = st.selectbox(
             label="Edital:",
-            options=list(usuario.keys()),
+            options=opcoes_editais,
+            index=idx_ativo,
             key="selectbox_sessao"
         )
 

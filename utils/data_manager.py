@@ -270,3 +270,63 @@ def deletar_edital_plataforma_db(nome):
     except Exception as e:
         st.error(f"Erro ao deletar edital: {e}")
         return False
+def get_edital_ativo():
+    """
+    Retorna o edital ativo do usuario logado.
+    Entrada: nenhuma
+    Saida: string com o nome do edital ativo ou None
+    """
+    usuario_id = get_usuario_id()
+    if not usuario_id:
+        return None
+
+    try:
+        supabase = get_supabase()
+        resposta = supabase.table("perfis") \
+            .select("edital_ativo") \
+            .eq("id", usuario_id) \
+            .execute()
+
+        if resposta.data:
+            return resposta.data[0]["edital_ativo"]
+        return None
+    except Exception as e:
+        st.error(f"Erro ao carregar edital ativo: {e}")
+        return None
+
+
+def set_edital_ativo(nome_edital):
+    """
+    Define o edital ativo do usuario logado.
+    Entrada: nome_edital → nome do edital
+    Saida: True se salvou, False se deu erro
+    """
+    usuario_id = get_usuario_id()
+    if not usuario_id:
+        return False
+
+    try:
+        supabase = get_supabase()
+
+        # Verifica se perfil existe
+        resposta = supabase.table("perfis") \
+            .select("id") \
+            .eq("id", usuario_id) \
+            .execute()
+
+        if resposta.data:
+            supabase.table("perfis") \
+                .update({"edital_ativo": nome_edital}) \
+                .eq("id", usuario_id) \
+                .execute()
+        else:
+            supabase.table("perfis") \
+                .insert({
+                    "id": usuario_id,
+                    "edital_ativo": nome_edital
+                }) \
+                .execute()
+        return True
+    except Exception as e:
+        st.error(f"Erro ao salvar edital ativo: {e}")
+        return False

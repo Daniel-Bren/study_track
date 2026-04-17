@@ -7,7 +7,9 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.data_manager import (
     carregar_editais_usuario_db,
     carregar_grade_db,
-    salvar_grade_db
+    salvar_grade_db,
+    get_edital_ativo,
+    set_edital_ativo
 )
 from utils.navegacao import mostrar_navegacao
 from utils.auth import verificar_sessao
@@ -47,12 +49,26 @@ st.markdown("---")
 col_edital, col_vazia = st.columns([2, 5])
 
 with col_edital:
+    # Carrega edital ativo salvo
+    edital_ativo = get_edital_ativo()
+
+    # Define o índice do selectbox baseado no edital ativo
+    opcoes_editais = list(usuario.keys())
+    if edital_ativo in opcoes_editais:
+        idx_ativo = opcoes_editais.index(edital_ativo)
+    else:
+        idx_ativo = 0
+
     edital_escolhido = st.selectbox(
         label="Edital atual",
-        options=list(usuario.keys()),
-        index=0,
+        options=opcoes_editais,
+        index=idx_ativo,
         key="selectbox_edital_grade"
     )
+
+    # Salva o edital ativo quando mudar
+    if edital_escolhido != edital_ativo:
+        set_edital_ativo(edital_escolhido)
 
 # Detecta troca de edital
 if st.session_state["edital_grade"] != edital_escolhido:
